@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+<h2>{{ task.title }}</h2>
+<br>
+<h3 style="background-color: azure;"> description:    {{ task.description }}</h3>
+
+
+
+<a class="btn btn-primary" href="{% url 'tasks:delete' task.id %}" role="button">delete</a>
+
+<a class="btn btn-primary" href="{% url 'tasks:update' task.id %}" role="button">update</a>
+
+{% endblock %}

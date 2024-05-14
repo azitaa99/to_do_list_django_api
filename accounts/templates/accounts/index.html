@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+
+  
+  {% if request.user.is_authenticated %}
+    <div  >
+    <div  class="myheader">
+      
+      <a href="{% url 'accounts:logout' %}">logout</a>
+      
+      <h2 id="hi">hello {{ request.user|title }}</h2>
+      <br>
+      <h6 >you have <i>{{ incom_tasks }}</i> incomplite task</h6>
+      
+    </div>
+<br>
+  <form  method="GET">
+    
+    <input type="text" , name="filterby" , value="{{ val }}" >
+    <input type="submit", value="search">
+
+  </form>
+  
+    <table class="table" style="padding: auto;;">
+      <thead>
+        <th>tasks</th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th><a   href="{% url 'tasks:create' %}">&#x2b</a></th>
+       
+      </thead>
+      <tbody>
+        {% for do in doing %}
+          <tr>
+            <td>
+              {% if do.complite  %}
+              
+              <a href="{% url 'tasks:detail' do.id %}" ><strike>{{ do.title }}</strike></a>
+              {% else %}
+              <a href="{% url 'tasks:detail' do.id %}" >{{ do.title }}  </a>
+              {% endif %}
+            </td>
+            </td>
+            <td></td>
+            <td><td  style="margin: 0; text-align: center; ">
+              <h6>{{ do.created|timesince }}</h6></td>
+            <td  style="margin: 0; text-align: center;"   colspan="6"><p><a href="{% url 'tasks:delete' do.id %}"><span class="glyphicon glyphicon-trash"></span></a></p></td>
+
+          </tr>
+        {% endfor %}
+      </tbody>  
+      
+      <tfoot>
+        <a href="{% url 'accounts:logout' %}">logout</a>
+      </tfoot>
+    </table>
+
+
+
+
+  {% else %}
+    <h3 style="text-align: center;">wellcome to to_do_list </h3>
+    <div class="card" style="width: 50rem;">
+  
+      <div class="card-body">
+        <h5 style="text-align: center;">login to see your tasks</h5>
+      </div>
+      <div class="card-body">
+
+        <a class="btn btn-danger" href="{% url 'accounts:login' %}" role="button">login</a>
+        <h6> dont have an account?  <a href="{% url 'accounts:register' %}">register</a></h6>
+        
+        
+
+      </div>
+      </div>
+
+  {% endif %}
+
+ 
+
+{% endblock %}
